@@ -29,10 +29,14 @@ if (form) {
   form.addEventListener("submit", event => {
     event.preventDefault();
 
+    if (!nameInput || !priceInput || !locationInput) {
+      return;
+    }
+
     items.push({
-      name: nameInput ? nameInput.value : "",
-      price: priceInput ? priceInput.value : "",
-      location: locationInput ? locationInput.value : ""
+      name: nameInput.value,
+      price: priceInput.value,
+      location: locationInput.value
     });
 
     renderItems();
