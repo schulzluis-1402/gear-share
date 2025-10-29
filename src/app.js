@@ -1,49 +1,35 @@
-const items = [
-  { name: "Mountainbike", price: "5€/Tag", location: "Innsbruck Zentrum" },
-  { name: "Ski Set", price: "10€/Tag", location: "Höttinger Au" }
-];
+document.addEventListener('DOMContentLoaded', () => {
+  const items = [
+    { name: "Mountainbike", price: "5€/Tag", location: "Innsbruck Zentrum" },
+    { name: "Ski Set", price: "10€/Tag", location: "Höttinger Au" }
+  ];
 
-const list = document.getElementById("list");
-const form = document.querySelector("form");
-const nameInput = document.getElementById("name");
-const priceInput = document.getElementById("price");
-const locationInput = document.getElementById("location");
+  const list = document.getElementById("list");
+  const form = document.getElementById("form");
 
-function renderItems() {
-  if (!list) {
-    return;
+  function render() {
+    list.innerHTML = "";
+    items.forEach(item => {
+      const el = document.createElement("div");
+      el.className = "item";
+      el.innerHTML = `<strong>${item.name}</strong> — ${item.price} — ${item.location}`;
+      list.appendChild(el);
+    });
   }
 
-  list.innerHTML = "";
-  items.forEach(item => {
-    const el = document.createElement("div");
-    el.innerHTML = `<strong>${item.name}</strong><br>${item.price}<br>${item.location}`;
-    el.className = "item";
-    list.appendChild(el);
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const price = document.getElementById("price").value;
+    const location = document.getElementById("location").value;
+
+    if (name && price && location) {
+      items.push({ name, price, location });
+      render();
+      form.reset();
+    }
   });
-}
 
-renderItems();
+  render();
+});
 
-function handleSubmit(event) {
-  event.preventDefault();
-
-  if (!nameInput || !priceInput || !locationInput) {
-    return;
-  }
-
-  const newItem = {
-    name: nameInput.value.trim(),
-    price: priceInput.value.trim(),
-    location: locationInput.value.trim()
-  };
-
-  items.push(newItem);
-
-  renderItems();
-  form.reset();
-}
-
-if (form) {
-  form.addEventListener("submit", handleSubmit);
-}
