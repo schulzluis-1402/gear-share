@@ -25,21 +25,25 @@ function renderItems() {
 
 renderItems();
 
+function handleSubmit(event) {
+  event.preventDefault();
+
+  if (!nameInput || !priceInput || !locationInput) {
+    return;
+  }
+
+  const newItem = {
+    name: nameInput.value.trim(),
+    price: priceInput.value.trim(),
+    location: locationInput.value.trim()
+  };
+
+  items.push(newItem);
+
+  renderItems();
+  form.reset();
+}
+
 if (form) {
-  form.addEventListener("submit", event => {
-    event.preventDefault();
-
-    if (!nameInput || !priceInput || !locationInput) {
-      return;
-    }
-
-    items.push({
-      name: nameInput.value,
-      price: priceInput.value,
-      location: locationInput.value
-    });
-
-    renderItems();
-    form.reset();
-  });
+  form.addEventListener("submit", handleSubmit);
 }
