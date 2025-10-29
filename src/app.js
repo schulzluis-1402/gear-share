@@ -4,7 +4,10 @@ const items = [
 ];
 
 const list = document.getElementById("list");
-const button = document.getElementById("add-item");
+const form = document.querySelector("form");
+const nameInput = document.getElementById("name");
+const priceInput = document.getElementById("price");
+const locationInput = document.getElementById("location");
 
 function renderItems() {
   if (!list) {
@@ -22,14 +25,17 @@ function renderItems() {
 
 renderItems();
 
-if (button) {
-  button.addEventListener("click", () => {
+if (form) {
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+
     items.push({
-      name: "Neues Equipment",
-      price: "0€/Tag",
-      location: "Noch nicht angegeben"
+      name: nameInput ? nameInput.value : "",
+      price: priceInput ? priceInput.value : "",
+      location: locationInput ? locationInput.value : ""
     });
 
     renderItems();
+    form.reset();
   });
 }
